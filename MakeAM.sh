@@ -1,4 +1,6 @@
-rm Makefile.am;
+#!/usr/bin/env sh
+
+rm -f Makefile.am;
 echo '
 #+----------------------------------------------------------------------------+
 #| Description:  Magic Set Editor - Program to make Magic (tm) cards          |
@@ -12,7 +14,7 @@ echo '
 AUTOMAKE_OPTIONS = subdir-objects
 
 bin_PROGRAMS = magicseteditor
-AM_CXXFLAGS = @WX_CXXFLAGS@ $(BOOST_CXXFLAGS) -I. -Wall
+AM_CXXFLAGS = @WX_CXXFLAGS@ $(BOOST_CXXFLAGS) -I. -Wall -Wno-unused-local-typedefs -fPIC
 AM_LDFLAGS  = $(BOOST_LDFLAGS)
 
 .hpp.gch:
@@ -24,7 +26,7 @@ AM_LDFLAGS  = $(BOOST_LDFLAGS)
 .gch.o:
 	gcc -x c - -c -o $@ <<<""
 
-magicseteditor_LDADD = @WX_LIBS@ $(BOOST_REGEX_LIB)
+magicseteditor_LDADD = @WX_LIBS@ $(BOOST_REGEX_LIB) $(BOOST_SYSTEM_LIB)
 magicseteditor_CXXFLAGS = $(AM_CXXFLAGS)
 magicseteditor_SOURCES = 
 

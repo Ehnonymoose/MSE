@@ -1,0 +1,31 @@
+# Build outputs
+*.o
+magicseteditor
+
+# autoconf garbage
+.deps/
+.dirstamp
+/autom4te.cache/
+
+# generated from other files
+/Makefile
+/Makefile.in
+/Makefile.am
+/configure
+/src/config.h
+/src/config.h.in
+
+# automatically created by autoconf
+/src/stamp-h1
+/config.*
+/aclocal.m4
+/m4/
+
+# tools that will be linked by autoconf
+/missing
+/depcomp
+/install-sh
+/compile
+
+# editor temp files
+*~
