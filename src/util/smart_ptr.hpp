@@ -30,11 +30,14 @@
 // Can't do  using namespace boost;
 // because boost::shared_ptr conflicts with std::tr1::shared_ptr
 // and some boost headers do include boost/shared_ptr themselves
+/*
 #if _HAS_TR1
 	using std::tr1::shared_ptr;
 #else
 	using boost::shared_ptr;
 #endif
+*/
+using std::shared_ptr;
 using boost::intrusive_ptr;
 using boost::scoped_ptr;
 using boost::static_pointer_cast;

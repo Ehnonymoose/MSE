@@ -86,18 +86,19 @@ void SymbolSymmetryEditor::destroyUI(wxToolBar* tb, wxMenuBar* mb) {
 }
 
 void SymbolSymmetryEditor::onUpdateUI(wxUpdateUIEvent& ev) {
+	bool bSymmetry = (symmetry != nullptr);
 	if (ev.GetId() >= ID_SYMMETRY && ev.GetId() < ID_SYMMETRY_MAX) {
-		ev.Enable(symmetry);
-		ev.Check(symmetry && symmetry->kind == ev.GetId() - ID_SYMMETRY);
+		ev.Enable(bSymmetry);
+		ev.Check(bSymmetry && symmetry->kind == ev.GetId() - ID_SYMMETRY);
 	} else if (ev.GetId() == ID_COPIES) {
-		ev.Enable(symmetry);
-		if (symmetry) {
+		ev.Enable(bSymmetry);
+		if (bSymmetry) {
 			copies->SetValue(symmetry->copies);
 		}
 	} else if (ev.GetId() == ID_ADD_SYMMETRY) {
 		ev.Enable(true);
 	} else if (ev.GetId() == ID_REMOVE_SYMMETRY) {
-		ev.Enable(symmetry);
+		ev.Enable(bSymmetry);
 	} else {
 		ev.Enable(false); // we don't know about this item
 	}
