@@ -90,7 +90,7 @@ struct RegexReplacer {
 				// call
 				inside = replacement_function->eval(ctx)->toString();
 			} else {
-				inside = results.format(replacement_string);
+				inside = wxString(results.format(replacement_string.ToStdWstring()));
 			}
 			// append replaced inside
 			if (recursive && level < 20) {

@@ -280,16 +280,13 @@ enum DrawLines
 class GraphLabelAxis : public Graph1D {
   public:
 	inline GraphLabelAxis(size_t axis, Direction direction, bool rotate = false, DrawLines draw_lines = DRAW_LINES_NO, bool label = false)
-		: Graph1D(axis), direction(direction), rotate(rotate), draw_lines(draw_lines), label(label)
+		: Graph1D(axis), direction(direction), draw_lines(draw_lines)
 	{}
 	virtual void draw(RotatedDC& dc, int current, DrawLayer layer) const;
 	virtual int findItem(const RealPoint& pos, const RealRect& screen_rect, bool tight) const;
   private:
 	Direction direction;
-	int levels;
-	bool rotate;
 	DrawLines draw_lines;
-	bool label;
 };
 
 /// Draws an a vertical axis for counts

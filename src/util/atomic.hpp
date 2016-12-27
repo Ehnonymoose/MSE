@@ -110,6 +110,9 @@
 		AtomicIntEquiv            v;  ///< The value
 		mutable wxCriticalSection cs; ///< Critical section protecting v
 	};
+
+	// TODO: implement Clang-based atomic integer instead of just claiming this version is fast.
+	#define HAVE_FAST_ATOMIC
 	
 #endif
 

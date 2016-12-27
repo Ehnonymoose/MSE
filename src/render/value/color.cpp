@@ -59,7 +59,7 @@ void ColorValueViewer::draw(RotatedDC& dc) {
 					style().width  - style().left_width - style().right_width,
 					style().height - style().top_width  - style().bottom_width
 				)));
-				dc.getDC().SetClippingRegion(r);
+				dc.getDC().SetClippingRegion(r.GetBox());
 			}
 			dc.DrawRoundedRectangle(style().getInternalRect(), style().radius);
 			if (clip) dc.getDC().DestroyClippingRegion();

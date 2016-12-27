@@ -145,7 +145,7 @@ Image load_resource_image(const String& name) {
 		int len = ::SizeofResource(wxGetInstance(), hResource);
 		wxMemoryInputStream stream(data, len);
 		return wxImage(stream);
-	#elif defined(__linux__)
+	#elif defined(__linux__) || defined(__APPLE__)
 		static String path = wxStandardPaths::Get().GetDataDir() + _("/resource/");
 		String file = path + name;
 		wxImage resource;

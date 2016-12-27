@@ -27,6 +27,7 @@
 #if USE_BOOST_REGEX
 	#include <boost/regex.hpp>
 	#include <boost/regex/pattern_except.hpp>
+	#include <boost/format.hpp>
 #endif
 
 // ----------------------------------------------------------------------------- : Boost implementation
@@ -45,12 +46,10 @@
 				return String(v.first, v.second);
 			}
 			/// Format a replacement string
-			inline String format(const String& format) const {
-				std::basic_string<Char> fmt(format.begin(),format.end());
-				String output;
-				boost::match_results<String::const_iterator>::format(
-					insert_iterator<String>(output, output.end()), fmt, boost::format_sed);
-				return output;
+			inline String format(const std::wstring& format) const {
+				std::basic_string<wchar_t> fmt(format.begin(),format.end());
+				boost::format output = boost::format( wxString(fmt).ToStdString().c_str() );
+				return wxString(output.str()).ToStdWstring();
 			}
 		};
 		

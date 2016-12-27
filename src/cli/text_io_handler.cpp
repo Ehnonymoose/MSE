@@ -146,7 +146,12 @@ void TextIOHandler::flushRaw() {
 	}
 	// count newlines
 	int newline_count = 0;
-	FOR_EACH_CONST(c,buffer) if (c==_('\n')) newline_count++;
+	for (size_t i = 0; i < buffer.length(); ++i) {
+		if (buffer[i] == _('\n')) {
+			++newline_count;
+		}
+	}
+	
 	// write record
 	printf("%d\n%d\n", raw_mode_status, newline_count);
 	if (!buffer.empty()) {

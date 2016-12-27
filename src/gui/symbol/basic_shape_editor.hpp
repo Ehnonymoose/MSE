@@ -54,7 +54,6 @@ class SymbolBasicShapeEditor : public SymbolEditorBase {
 	bool drawing;
 	// controls
 	wxSpinCtrl*   sides;
-	wxStaticText* sidesL;
 	
 	/// Cancel the drawing
 	void stopActions();

@@ -192,7 +192,6 @@ void Keyword::prepare(const vector<KeywordParamP>& param_types, bool force) {
 	// Prepare regex
 	String regex;
 	String text; // normal, non-regex, text
-	vector<KeywordParamP>::const_iterator param = parameters.begin();
 	#if USE_CASE_INSENSITIVE_KEYWORDS
 		regex = _("(?i)"); // case insensitive matching
 	#endif
@@ -275,7 +274,6 @@ class KeywordTrie {
 
 KeywordTrie::KeywordTrie()
 	: on_any_star(nullptr)
-	, finished(nullptr)
 {}
 
 KeywordTrie::~KeywordTrie() {
@@ -295,8 +293,8 @@ KeywordTrie* KeywordTrie::insert(Char c) {
 }
 KeywordTrie* KeywordTrie::insert(const String& match) {
 	KeywordTrie* cur = this;
-	FOR_EACH_CONST(c, match) {
-		cur = cur->insert(static_cast<Char>(c));
+	for (size_t i = 0; i < match.length(); ++i) {
+		cur = cur->insert(static_cast<Char>( match[i] ));
 	}
 	return cur;
 }

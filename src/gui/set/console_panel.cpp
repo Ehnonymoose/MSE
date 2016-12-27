@@ -272,7 +272,7 @@ class MessageCtrl : public wxScrolledWindow {
 		// height of bitmap
 		int bitmap_height = msg.bitmap.Ok() ? msg.bitmap.GetHeight() : 0;
 		
-		return max(MIN_ITEM_HEIGHT, TEXT_PADDING_TOP + TEXT_PADDING_BOTTOM + text_height + bitmap_height) + LIST_SPACING;
+		return max(22, TEXT_PADDING_TOP + TEXT_PADDING_BOTTOM + text_height + bitmap_height) + LIST_SPACING;
 	}
 	
 	// --------------------------------------------------- : Layout

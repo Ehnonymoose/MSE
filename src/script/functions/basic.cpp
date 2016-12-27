@@ -17,6 +17,32 @@
 #include <data/card.hpp>
 #include <data/game.hpp>
 
+/*
+#include <algorithm>
+namespace std 
+{ 
+	template <>
+	inline void swap<wxUniCharRef>(wxUniCharRef& lhs, wxUniCharRef& rhs)
+	{
+		if (&lhs != &rhs)
+		{
+			wxUniChar tmp = lhs;
+			lhs = rhs;
+			rhs = tmp;
+		}
+	}
+
+	template <> 
+	inline void iter_swap<wxString::iterator>(wxString::iterator i1, wxString::iterator i2) 
+	{ 
+		wxUniCharRef r1 = *i1; 
+		wxUniCharRef r2 = *i2;
+		std::swap(r1, r2); 
+	}
+
+};
+*/
+
 DECLARE_TYPEOF_COLLECTION(pair<String COMMA ScriptValueP>);
 
 // ----------------------------------------------------------------------------- : Debugging
@@ -333,7 +359,10 @@ SCRIPT_FUNCTION(to_sentence_case) {
 // reverse a string
 SCRIPT_FUNCTION(reverse_text) {
 	SCRIPT_PARAM_C(String, input);
-	reverse(input.begin(), input.end());
+	//reverse(input.begin(), input.end());
+	std::wstring wsInput = input.ToStdWstring();
+	std::reverse(wsInput.begin(), wsInput.end());
+	input = wxString(wsInput);
 	SCRIPT_RETURN(input);
 }
 
@@ -389,7 +418,12 @@ SCRIPT_FUNCTION(sort_text) {
 	SCRIPT_OPTIONAL_PARAM_C(String, order) {
 		SCRIPT_RETURN(spec_sort(order, input));
 	} else {
-		sort(input.begin(), input.end());
+		std::wstring wsInput = input.ToStdWstring();
+		std::sort(wsInput.begin(), wsInput.end());
+		input = wxString(wsInput);
+		
+		//sort(input.begin(), input.end());
+		
 		SCRIPT_RETURN(input);
 	}
 }
@@ -486,12 +520,14 @@ ScriptValueP sort_script(Context& ctx, const ScriptValueP& list, ScriptValue& or
 	ScriptType list_t = list->type();
 	if (list_t == SCRIPT_STRING) {
 		// sort a string
-		String s = list->toString();
+		std::wstring s = list->toString().ToStdWstring();
 		sort(s.begin(), s.end());
 		if (remove_duplicates) {
 			s.erase( unique(s.begin(), s.end()), s.end() );
 		}
-		SCRIPT_RETURN(s);
+
+		String result(s);
+		SCRIPT_RETURN(result);
 	} else {
 		// are we sorting a set?
 		ScriptObject<Set*>* set = dynamic_cast<ScriptObject<Set*>*>(list.get());

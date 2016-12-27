@@ -614,7 +614,6 @@ void SetWindow::onFileExportMenu(wxCommandEvent& ev) {
 	#else
 		// TODO: This is probably not correct!
 		wxSize tool_size = tb->GetToolSize();
-		wxSize tool_margin = tb->GetToolMargins();
 		tool_rect.SetSize(tool_size);
 		tool_rect.y = 0;
 		tool_rect.x = tool_size.x * pos;

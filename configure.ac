@@ -33,7 +33,11 @@ if test X$user_set_cxxflags != Xyes; then
 fi
 
 # Checks for libraries.
-AC_CHECK_LIB([hunspell-1.3],[Hunspell_create])
+# Hunspell needs to be linked with the right minor version (no -lhunspell)
+# so we manually check for a few common ones.
+#AC_CHECK_LIB([hunspell-1.3],[Hunspell_create])
+#AC_CHECK_LIB([hunspell-1.6],[Hunspell_create])
+PKG_CHECK_MODULES([HUNSPELL], [hunspell])
 
 # Check for Boost
 AX_BOOST_BASE([1.37.0], [], AC_MSG_ERROR([Boost not found.]))

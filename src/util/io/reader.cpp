@@ -360,7 +360,8 @@ template <> void Reader::handle(tribool& tb) {
 // ----------------------------------------------------------------------------- : Handling less basic util types
 
 template <> void Reader::handle(wxDateTime& date) {
-	if (!date.ParseDateTime(getValue().c_str())) {
+	wxString::const_iterator end;
+	if (!date.ParseDateTime(getValue(), &end)) {
 		throw ParseError(_("Expected a date and time"));
 	}
 }

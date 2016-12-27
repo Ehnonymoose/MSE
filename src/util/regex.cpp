@@ -25,12 +25,13 @@ void Regex::assign(const String& code) {
 }
 
 void Regex::replace_all(String* input, const String& format) {
-	//std::basic_string<Char> fmt; format_string(format,fmt);
-	std::basic_string<Char> fmt(format.begin(),format.end());
-	String output;
-	regex_replace(insert_iterator<String>(output, output.end()),
-	              input->begin(), input->end(), regex, fmt, boost::format_sed);
-	*input = output;
+	std::wstring wsFormat = format.ToStdWstring();
+	std::wstring wsInput = input->ToStdWstring();
+
+	std::wstring output;
+	regex_replace(insert_iterator<std::wstring>(output, output.end()),
+	              wsInput.begin(), wsInput.end(), regex, wsFormat, boost::format_sed);
+	*input = wxString(output);
 }
 
 #else // USE_BOOST_REGEX

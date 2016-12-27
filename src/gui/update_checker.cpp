@@ -16,7 +16,6 @@
 #include <util/window_id.hpp>
 //#include <script/value.hpp> // for some strange reason the profile build needs this :(
 //#include <script/to_value.hpp>
-#include <wx/dialup.h>
 #include <wx/url.h>
 
 DECLARE_POINTER_TYPE(VersionData);
@@ -128,16 +127,7 @@ class CheckUpdateThread : public wxThread {
 };
 
 void check_updates() {
-	if (settings.check_updates == CHECK_ALWAYS) {
 		check_updates_now();
-	} else if (settings.check_updates == CHECK_IF_CONNECTED) {
-		// only if internet connection exists
-		wxDialUpManager* dum = wxDialUpManager::Create();
-		if (dum->IsOk() && dum->IsOnline()) {
-			check_updates_now();
-		}
-		delete dum;
-	}
 }
 
 void check_updates_now(bool async) {

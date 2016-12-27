@@ -118,11 +118,11 @@ void cycle_sort(const String& spec, String& input, String& ret) {
 	size_t size = spec.size();
 	vector<UInt> counts;
 	// count occurences of each char in spec
-	FOR_EACH_CONST(s, spec) {
+	for (const auto& s : spec) {
 		UInt c = 0;
-		FOR_EACH(i, input) {
-			if (s == i) {
-				i = REMOVED; // remove
+		for (size_t i = 0; i < input.length(); ++i) {
+			if (s == input[i]) {
+				input[i] = REMOVED; // remove
 				c++;
 			}
 		}
@@ -159,7 +159,8 @@ void cycle_sort(const String& spec, String& input, String& ret) {
 /// Sort a string, keeping the characters in the original order
 /** Removed used characters from input! */
 void mixed_sort(const String& spec, String& input, String& ret) {
-	FOR_EACH(c, input) {
+	for (size_t i = 0; i < input.length(); ++i) {
+		wxUniCharRef c = input[i];
 		if (spec.find(c) != String::npos) {
 			ret += c;
 			c = REMOVED;
@@ -223,7 +224,8 @@ void in_place_sort(const String& spec, String& input, String& ret) {
 	spec_sort(spec, input, result);
 	// restore into the same order as in 'input'
 	size_t pos_r = 0;
-	FOR_EACH(c, input) {
+	for (size_t i = 0; i < input.length(); ++i) {
+		wxUniCharRef c = input[i];
 		if (c == REMOVED) {
 			if (pos_r < result.size()) {
 				ret += result.GetChar(pos_r++);
@@ -241,7 +243,8 @@ String spec_sort(const String& spec, String& input, String& ret) {
 	SpecIterator it(spec);
 	while(it.nextUntil(0)) {
 		if (it.escaped) {					// single character, escaped
-			FOR_EACH(d, input) {
+			for (size_t i = 0; i < input.length(); ++i) {
+				wxUniCharRef d = input[i];
 				if (d == it.value) {
 					ret += d;
 					d = REMOVED;
@@ -297,7 +300,8 @@ String spec_sort(const String& spec, String& input, String& ret) {
 			in_place_sort(sub_spec, input, ret);
 		
 		} else if (it.keyword(_("any()"))) { // remaining input
-			FOR_EACH(d, input) {
+			for (size_t i = 0; i < input.length(); ++i) {
+				wxUniCharRef d = input[i];
 				if (d != REMOVED) {
 					ret += d;
 					d = REMOVED;
@@ -311,14 +315,20 @@ String spec_sort(const String& spec, String& input, String& ret) {
 				String sub_spec = it.readRawParam(_(')'),_(' '));
 				spec_sort(sub_spec, input, ret);
 				// reverse this item
-				reverse(ret.begin() + before_ret_size, ret.end());
+
+				std::wstring wsRet = ret.ToStdWstring();
+				reverse(wsRet.begin() + before_ret_size, wsRet.end());
+				ret = wxString(wsRet);
 			}
 			// re-reverse all items
-			reverse(ret.begin() + old_ret_size, ret.end());
+			std::wstring wsRet = ret.ToStdWstring();
+			reverse(wsRet.begin() + old_ret_size, wsRet.end());
+			ret = wxString(wsRet);
 		
 		} else if (it.keyword(_("ordered("))) { // in spec order
 			while (it.nextUntil(_(')'))) {
-				FOR_EACH(d, input) {
+				for (size_t i = 0; i < input.length(); ++i) {
+					wxUniCharRef d = input[i];
 					if (d == it.value) {
 						ret += d;
 						d = REMOVED;
@@ -326,7 +336,8 @@ String spec_sort(const String& spec, String& input, String& ret) {
 				}
 			}
 		} else {					// single char
-			FOR_EACH(d, input) {
+			for (size_t i = 0; i < input.length(); ++i) {
+				wxUniCharRef d = input[i];
 				if (d == it.value) {
 					ret += d;
 					d = REMOVED;

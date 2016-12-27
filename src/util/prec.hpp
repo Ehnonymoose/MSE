@@ -87,7 +87,15 @@ typedef unsigned char Byte;
 typedef unsigned int  UInt;
 
 /// Null pointer
-#define nullptr 0
+#ifndef nullptr
+	#define nullptr 0
+#endif
+
+// A specialization for swap() for wxUniCharRef was added to wxWidgets in 3.1.0.
+// Before that, we need to define our own, or things either don't compile or are horribly broken.
+#if wxABI_VERSION < 30100
+
+#endif
 
 // ----------------------------------------------------------------------------- : MSE Headers
 

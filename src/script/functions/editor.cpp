@@ -297,7 +297,7 @@ String filter_choices(const String& input, const vector<String>& choices, int mi
 	}
 	// keep less choices
 	if (count > max) {
-		for (size_t i = choices.size() - 1 ; i >= 0 ; --i) {
+		for (ssize_t i = choices.size() - 1 ; i >= 0 ; --i) {
 			if (count <= max) break;
 			if (seen[i]) {
 				if (max > 0 && choices[i] == prefered) continue; // we would rather not remove prefered choice
@@ -387,7 +387,11 @@ SCRIPT_FUNCTION(count_chosen) {
 			SCRIPT_RETURN(0);
 		} else {
 			int count = 1;
-			FOR_EACH(c, input) if (c == _(',')) ++count;
+			for (size_t i = 0; i < input.length(); ++i) {
+				if (input[i] == _(',')) {
+					++count;
+				}
+			}
 			SCRIPT_RETURN(count);
 		}
 	}

@@ -114,7 +114,7 @@ String tr(const Package&, const String& subcat, const String& key, DefaultLocale
 /// Format a string
 /** Equivalent to sprintf / String::Format, but allows strings to be passed as arguments (gcc)
  */
-inline String format_string(const String& format, ...) {
+inline String format_string(const String format, ...) {
 	va_list args;
 	va_start(args, format);
 	String res = String::Format(format, args);

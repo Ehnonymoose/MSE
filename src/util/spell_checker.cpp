@@ -74,7 +74,7 @@ void SpellChecker::destroyAll() {
 bool SpellChecker::convert_encoding(const String& word, CharBuffer& out) {
 	// fix curly quotes, especially apstrophes
 	String fixed;
-	FOR_EACH_CONST(c,word) {
+	for (const auto& c : word) {
 		if (c == LEFT_SINGLE_QUOTE || c == RIGHT_SINGLE_QUOTE) {
 			fixed += _('\'');
 		} else if (c == LEFT_DOUBLE_QUOTE || c == RIGHT_DOUBLE_QUOTE) {
@@ -109,7 +109,8 @@ bool SpellChecker::spell(const String& word) {
 	if (word.empty()) return true; // empty word is okay
 	CharBuffer str;
 	if (!convert_encoding(word,str)) return false;
-	return Hunspell::spell(str);
+	std::string sWord(str);
+	return Hunspell::spell(sWord);
 }
 
 bool SpellChecker::spell_with_punctuation(const String& word) {
@@ -123,12 +124,10 @@ void SpellChecker::suggest(const String& word, vector<String>& suggestions_out) 
 	CharBuffer str;
 	if (!convert_encoding(word,str)) return;
 	// call Hunspell
-	char** suggestions;
-	int num_suggestions = Hunspell::suggest(&suggestions, str);
+	std::string sWord(str);
+	std::vector<std::string> vecSuggestions = Hunspell::suggest(sWord);
 	// copy sugestions
-	for (int i = 0 ; i < num_suggestions ; ++i) {
-		suggestions_out.push_back(String(suggestions[i],encoding));
-		free(suggestions[i]);
+	for (int i = 0 ; i < vecSuggestions.size() ; ++i) {
+		suggestions_out.push_back(String(vecSuggestions[i].c_str(),encoding));
 	}
-	free(suggestions);
 }

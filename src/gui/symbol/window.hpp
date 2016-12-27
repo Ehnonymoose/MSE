@@ -12,6 +12,7 @@
 #include <util/prec.hpp>
 #include <data/symbol.hpp>
 #include <wx/listctrl.h>
+#include <wx/spinctrl.h>
 
 class SymbolControl;
 class SymbolPartList;
