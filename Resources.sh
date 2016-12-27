@@ -1,10 +1,14 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
-BASEDIR=~/.magicseteditor/resource
+BASEDIR=~/.magicseteditor
+RESOURCEDIR=$BASEDIR/resource
 
 rm -rf $BASEDIR
+mkdir $BASEDIR
 
-for DIR in $BASEDIR $BASEDIR/icon $BASEDIR/tool $BASEDIR/cursor
+cp -R data $BASEDIR
+
+for DIR in $RESOURCEDIR $RESOURCEDIR/icon $RESOURCEDIR/tool $RESOURCEDIR/cursor
 do
 if [ -d $DIR ]; then
 : ;
@@ -16,8 +20,8 @@ mkdir $DIR;
 fi
 done
 
-cp src/resource/common/* $BASEDIR;
-cp src/resource/msw/tool/* $BASEDIR/tool;
-cp src/resource/msw/icon/* $BASEDIR/icon;
-cp src/resource/msw/cursor/* $BASEDIR/cursor;
-cp src/resource/msw/other/* $BASEDIR;
+cp src/resource/common/* $RESOURCEDIR;
+cp src/resource/msw/tool/* $RESOURCEDIR/tool;
+cp src/resource/msw/icon/* $RESOURCEDIR/icon;
+cp src/resource/msw/cursor/* $RESOURCEDIR/cursor;
+cp src/resource/msw/other/* $RESOURCEDIR;

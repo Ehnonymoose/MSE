@@ -19,9 +19,7 @@ After those packages are installed, you should be able to build using the follow
 
 Before running MSE2, we need to set up some data files:
 
-    $ mkdir ~/.magicseteditor
     $ ./Resources.sh
-    $ cp -r data/ ~/.magicseteditor/
 
 Now things should work:
 
