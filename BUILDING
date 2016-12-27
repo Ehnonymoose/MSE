@@ -1,0 +1,28 @@
+Building requires the following packages:
+ - hunspell development files ( >= 1.3.0 )
+ - boost development files ( >= 1.37.0 )
+ - wxWidgets development files
+ - the autoconf archive
+ - autotools
+
+To get all of these on Fedora 24, call:
+
+    $ sudo dnf install hunspell-devel boost-devel wxGTK-devel autoconf-archive
+
+After those packages are installed, you should be able to build using the following:
+
+    $ ./MakeAM.sh
+    $ autoreconf -i
+    $ ./configure
+    $ make -j4
+    $ sudo make install
+
+Before running MSE2, we need to set up some data files:
+
+    $ mkdir ~/.magicseteditor
+    $ ./Resources.sh
+    $ cp -r data/ ~/.magicseteditor/
+
+Now things should work:
+
+    $ magicseteditor
